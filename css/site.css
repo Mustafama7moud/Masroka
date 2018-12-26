@@ -1,0 +1,12 @@
+/*
+    Main Project Style Sheet
+*/
+body{
+    background-color: #eee;
+}
+
+#container{
+    padding: 40px;
+    margin-top: 75px;
+    border-radius: 25px;
+}
