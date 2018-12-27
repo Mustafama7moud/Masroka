@@ -8,5 +8,10 @@ body{
 #container{
     padding: 40px;
     margin-top: 75px;
-    border-radius: 25px;
+}
+.navbar{
+}
+.custom-control{
+    padding-left: 0px;
+    padding-top: 24px;
 }

@@ -8,13 +8,13 @@ require_once './db-connection.php';
 require_once './classes/item.php';
 
 $item = new Item();
-$items = $item->getAllItem($DBConn);
+$items = $item->getAllUserItem($_SESSION['login-user'], $DBConn);
 
 ?>
 
 <html>
     <head>
-        <title>Homepage</title>
+        <title>My Post</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -28,7 +28,7 @@ $items = $item->getAllItem($DBConn);
     <body>
         <div id="container" class="container text-center" style="width: 50%;margin-top: 0px; padding-top: 8px;">
             <nav class="navbar navbar-expand-xlg bg-dark navbar-dark rounded-top">
-                <a class="navbar-brand text-secondary" href="">Masroka</a>
+                <a class="navbar-brand text-secondary" href="index.php">Masroka</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
                   <span class="navbar-toggler-icon"></span>
                 </button>
@@ -44,7 +44,7 @@ $items = $item->getAllItem($DBConn);
                     <li class="nav-item">
                       <a class="nav-link" href="post-item.php"><span class="fas fa-plus-square"></span> Post Item</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item active">
                       <a class="nav-link" href="my-post.php"><span class="fas fa-poll-h"></span> My Posts</a>
                     </li>
                     <li class="nav-item">
@@ -58,7 +58,7 @@ $items = $item->getAllItem($DBConn);
             </nav>
             
             <div class="card">
-                <div class="card-header"><h3 class="text-dark"><span class="fab fa-flipboard"></span> Recent Post</h3></div>
+                <div class="card-header"><h3 class="text-dark"><span class="fab fa-flipboard"></span> My Post:<h6 style="display: inline;">( <?= $items->num_rows;?> Post )</h6></h3></div>
                 <div class="card-body rounded-bottom">
                     <?php while($i = $items->fetch_assoc()): ?>
                     <div class="card border-dark">
@@ -79,3 +79,4 @@ $items = $item->getAllItem($DBConn);
         </div>
     </body>
 </html>
+
