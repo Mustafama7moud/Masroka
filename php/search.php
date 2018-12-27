@@ -5,16 +5,23 @@
 session_start();
 
 require_once './db-connection.php';
-require_once './classes/item.php';
 
-$item = new Item();
-$items = $item->getAllItem($DBConn);
+$items = '';
+if(isset($_GET['q'])){
+    $key = $_GET['q'];
+    $query = "SELECT * FROM items WHERE itemName LIKE '%$key%' OR"
+            . " itemCategory LIKE '%$key%' OR itemDesc LIKE '%$key%' OR"
+            . " itemFounder LIKE '%$key%' ORDER BY postDate DESC";
+    $items = $DBConn->query($query);
+}else {
+    header('location: ../index.php');
+}
 
 ?>
 
 <html>
     <head>
-        <title>Homepage</title>
+        <title>Search result</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -58,7 +65,7 @@ $items = $item->getAllItem($DBConn);
             </nav>
             
             <div class="card">
-                <div class="card-header"><h3 class="text-dark"><span class="fab fa-flipboard"></span> Recent Post</h3></div>
+                <div class="card-header"><h3 class="text-dark"><span class="fab fa-flipboard"></span> Found <?= $items->num_rows;?> Post</h3></div>
                 <div class="card-body rounded-bottom">
                     <?php while($i = $items->fetch_assoc()): ?>
                     <div class="card border-dark">
@@ -68,7 +75,7 @@ $items = $item->getAllItem($DBConn);
                                 <img class="img-fluid" src="<?= $i['itemPhoto'];?>" class="rounded">
                             </a>
                             <br/><br/>
-                            <h6 class="text-left"><span class="fas fa-info-circle"></span> Description:</h6>
+                            <h6 class="text-left"><span class="fas fa-info"></span> Description:</h6>
                             <p class="text-left"><?= $i['itemDesc'];?></p>
                         </div> 
                     </div>
